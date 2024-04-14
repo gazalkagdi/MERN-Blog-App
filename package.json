@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "This MERN stack blog application includes a dashboard feature for users to manage their blog posts, providing functionalities such as creating, editing, and deleting posts, as well as viewing analytics or user engagement metrics.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "nodemon api/index.js",
     "start": "node api/index.js"

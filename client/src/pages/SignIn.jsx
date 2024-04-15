@@ -1,12 +1,16 @@
 import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice';
+
 
 
 export default function SignIn() {
     const [formData, setFormData] = useState({});
-    const [errorMessage, setErrorMessage] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    const { loading, error: errorMessage, currentUser } = useSelector(state => state.user);
+
 
     const navigate = useNavigate();
 
@@ -17,11 +21,10 @@ export default function SignIn() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!formData.email || !formData.password) {
-            return setErrorMessage("Please fill out all fields");
+            dispatch(signInFailure("Please fill out all fields"));
         }
         try {
-            setLoading(true);
-            setErrorMessage(null);
+            dispatch(signInStart());
             const response = await fetch('/api/auth/signin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -30,22 +33,19 @@ export default function SignIn() {
             const data = await response.json();
 
             if (data.success === false) {
-                setErrorMessage(data.message);
-                setLoading(false);
-                return;
+                dispatch(signInFailure(data.message));
             }
             if (response.ok) {
+                dispatch(signInSuccess(data));
                 navigate('/')
             }
 
-            setLoading(false);
         } catch (error) {
-            console.error('Error:', error);
-            setErrorMessage("Internal server error");
-            setLoading(false);
+            dispatch(signInFailure(error));
             return;
         }
     }
+
 
     return (
         <div className='min-h-screen mt-20'>
@@ -60,15 +60,6 @@ export default function SignIn() {
                 {/* right */}
                 <div className='flex-1'>
                     <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
-                        {/* <div>
-                            <Label value='Your Username' />
-                            <TextInput
-                                type='text'
-                                placeholder='Username'
-                                id='username'
-                                onChange={handleChange}
-                            />
-                        </div> */}
                         <div>
                             <Label value='Your Email' />
                             <TextInput

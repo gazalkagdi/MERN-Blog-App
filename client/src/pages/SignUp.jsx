@@ -1,6 +1,7 @@
 import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import AuthO from '../components/AuthO';
 
 export default function SignUp() {
 
@@ -99,10 +100,12 @@ export default function SignUp() {
                                 ) : ('Sign Up')
                             }
                         </Button>
+                        <AuthO />
                     </form>
                     <div className='flex text-sm mt-5 gap-2'>
                         <span>Have an account? </span>
                         <Link to='/sign-in' className='text-blue-500'>Sign in</Link>
+
                     </div>
                     {
                         errorMessage && (

@@ -17,9 +17,9 @@ export default function DashSidebar() {
     return (
         <Sidebar className="w-full md:w-56">
             <Sidebar.Items>
-                <Sidebar.ItemGroup>
+                <Sidebar.ItemGroup >
                     <Link to='/dashboard?tab=profile'>
-                        <Sidebar.Item active={tab === 'profile'} icon={HiUser} labelColor='dark' label={"User"}>Profile</Sidebar.Item>
+                        <Sidebar.Item active={tab === 'profile'} icon={HiUser} labelColor='dark' label={"User"} as='div'>Profile</Sidebar.Item>
                     </Link>
                     <Sidebar.Item icon={HiArrowSmLeft} className='cursor-pointer'>Sign out</Sidebar.Item>
                 </Sidebar.ItemGroup>

@@ -1,4 +1,4 @@
-import { Button, Textarea } from 'flowbite-react';
+import { Alert, Button, Textarea } from 'flowbite-react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
@@ -67,6 +67,7 @@ export default function CommentSection({ postId }) {
                         <p className='text-gray-500 text-xs'>{200 - comment.length} characters remaining</p>
                         <Button gradientDuoTone='purpleToBlue' type='submit' outline>Submit</Button>
                     </div>
+                    {commentError && <Alert color='failure'>{commentError}</Alert>}
                 </form>
             )}
         </div>

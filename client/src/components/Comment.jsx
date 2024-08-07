@@ -9,7 +9,7 @@ export default function Comment({ comment, onLike, onEdit, OnDelete }) {
   const { currentUser } = useSelector((state) => state.user);
   const [editing, setEditing] = useState(false);
   const [editContent, setEditContent] = useState("");
-  const api = import.meta.env.API;
+  const api = import.meta.env.VITE_API;
 
   useEffect(() => {
     const getUser = async () => {

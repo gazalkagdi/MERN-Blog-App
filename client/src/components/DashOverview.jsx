@@ -21,7 +21,7 @@ export default function DashOverview() {
   const [lastMonthComments, setLastMonthComments] = useState(0);
   const { currentUser } = useSelector((state) => state.user);
 
-  const api = import.meta.env.API;
+  const api = import.meta.env.VITE_API;
 
   useEffect(() => {
     const fetchUsers = async () => {

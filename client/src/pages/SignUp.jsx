@@ -8,7 +8,7 @@ export default function SignUp() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const api = import.meta.env.API;
+  const api = import.meta.env.VITE_API;
 
   const navigate = useNavigate();
 

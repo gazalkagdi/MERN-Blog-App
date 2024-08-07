@@ -12,7 +12,7 @@ export default function DashComments() {
   const [showModal, setShowModal] = useState(false);
   const [deleteCommentId, setDeleteCommentId] = useState(null);
 
-  const api = import.meta.env.API;
+  const api = import.meta.env.VITE_API;
 
   useEffect(() => {
     const fetchComments = async () => {

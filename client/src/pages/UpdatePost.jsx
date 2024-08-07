@@ -24,7 +24,7 @@ export default function UpdatePost() {
   const { postId } = useParams();
   const { currentUser } = useSelector((state) => state.user);
 
-  const api = import.meta.env.API;
+  const api = import.meta.env.VITE_API;
 
   useEffect(() => {
     const fetchPost = async () => {

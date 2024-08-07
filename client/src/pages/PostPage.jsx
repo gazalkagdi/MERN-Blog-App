@@ -12,7 +12,7 @@ export default function PostPage() {
   const [post, setPost] = useState(null);
   const [recentPost, setRecentPost] = useState(null);
 
-  const api = import.meta.env.API;
+  const api = import.meta.env.VITE_API;
 
   useEffect(() => {
     const getPost = async () => {

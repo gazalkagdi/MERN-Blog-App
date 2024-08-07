@@ -14,7 +14,7 @@ export default function CommentSection({ postId }) {
   const [deleteId, setDeleteId] = useState(null);
   const navigate = useNavigate();
 
-  const api = import.meta.env.API;
+  const api = import.meta.env.VITE_API;
 
   useEffect(() => {
     const getComments = async () => {

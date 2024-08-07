@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 export default function AuthO() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const api = import.meta.env.API;
+  const api = import.meta.env.VITE_API;
 
   const handleGoogleClick = async () => {
     const auth = getAuth(app);

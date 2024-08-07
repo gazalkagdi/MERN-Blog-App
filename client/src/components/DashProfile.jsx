@@ -36,7 +36,7 @@ export default function DashProfile() {
   const filePickerRef = useRef();
   const dispatch = useDispatch();
 
-  const api = import.meta.env.API;
+  const api = import.meta.env.VITE_API;
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];

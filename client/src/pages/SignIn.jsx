@@ -18,7 +18,7 @@ export default function SignIn() {
     currentUser,
   } = useSelector((state) => state.user);
 
-  const api = import.meta.env.API;
+  const api = import.meta.env.VITE_API;
 
   const navigate = useNavigate();
 

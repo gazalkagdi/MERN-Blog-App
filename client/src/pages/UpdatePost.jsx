@@ -24,10 +24,12 @@ export default function UpdatePost() {
   const { postId } = useParams();
   const { currentUser } = useSelector((state) => state.user);
 
+  const api = import.meta.env.API;
+
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await fetch(`/api/post/getposts?postId=${postId}`, {
+        const res = await fetch(`${api}/api/post/getposts?postId=${postId}`, {
           method: "GET",
         });
         const data = await res.json();
@@ -85,7 +87,7 @@ export default function UpdatePost() {
     e.preventDefault();
     try {
       const res = await fetch(
-        `/api/post/updatepost/${postId}/${currentUser._id}`,
+        `${api}/api/post/updatepost/${postId}/${currentUser._id}`,
         {
           method: "PUT",
           headers: {

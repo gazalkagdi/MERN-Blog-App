@@ -18,6 +18,8 @@ export default function SignIn() {
     currentUser,
   } = useSelector((state) => state.user);
 
+  const api = import.meta.env.API;
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -31,7 +33,7 @@ export default function SignIn() {
     }
     try {
       dispatch(signInStart());
-      const response = await fetch("/api/auth/signin", {
+      const response = await fetch(`${api}/api/auth/signin`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

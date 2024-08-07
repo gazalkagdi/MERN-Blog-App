@@ -12,10 +12,12 @@ export default function DashUsers() {
   const [showModal, setShowModal] = useState(false);
   const [deleteUserId, setDeleteUserId] = useState(null);
 
+  const api = import.meta.env.API;
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch(`/api/user/getusers`, {
+        const res = await fetch(`${api}/api/user/getusers`, {
           method: "GET",
         });
         const data = await res.json();
@@ -37,9 +39,12 @@ export default function DashUsers() {
   const handleShowMore = async () => {
     try {
       const startIndex = user.length;
-      const res = await fetch(`/api/user/getusers?startIndex=${startIndex}`, {
-        method: "GET",
-      });
+      const res = await fetch(
+        `${api}/api/user/getusers?startIndex=${startIndex}`,
+        {
+          method: "GET",
+        }
+      );
       const data = await res.json();
       if (res.ok) {
         setUser((prev) => [...prev, ...data.users]);
@@ -55,7 +60,7 @@ export default function DashUsers() {
   const handleDeleteUser = async () => {
     setShowModal(false);
     try {
-      const res = await fetch(`/api/user/delete/${deleteUserId}`, {
+      const res = await fetch(`${api}/api/user/delete/${deleteUserId}`, {
         method: "DELETE",
       });
       const data = await res.json();

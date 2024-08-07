@@ -9,11 +9,12 @@ export default function Comment({ comment, onLike, onEdit, OnDelete }) {
   const { currentUser } = useSelector((state) => state.user);
   const [editing, setEditing] = useState(false);
   const [editContent, setEditContent] = useState("");
+  const api = import.meta.env.API;
 
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await fetch(`/api/user/${comment.userId}`);
+        const res = await fetch(`${api}/api/user/${comment.userId}`);
         const data = await res.json();
         if (!res.ok) {
           console.log(data.message);
@@ -33,7 +34,7 @@ export default function Comment({ comment, onLike, onEdit, OnDelete }) {
 
   const handleSave = async () => {
     try {
-      const res = await fetch(`/api/comment/editcomment/${comment._id}`, {
+      const res = await fetch(`${api}/api/comment/editcomment/${comment._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

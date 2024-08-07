@@ -5,11 +5,12 @@ import PostCard from "../components/PostCard";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
+  const api = import.meta.env.API;
 
   useEffect(() => {
     const getPosts = async () => {
       try {
-        const res = await fetch("/api/post/getposts", {
+        const res = await fetch(`${api}/api/post/getposts`, {
           method: "GET",
         });
         if (res.ok) {

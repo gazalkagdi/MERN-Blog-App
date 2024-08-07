@@ -14,10 +14,12 @@ export default function CommentSection({ postId }) {
   const [deleteId, setDeleteId] = useState(null);
   const navigate = useNavigate();
 
+  const api = import.meta.env.API;
+
   useEffect(() => {
     const getComments = async () => {
       try {
-        const res = await fetch(`/api/comment/getcomments/${postId}`, {
+        const res = await fetch(`${api}/api/comment/getcomments/${postId}`, {
           method: "GET",
         });
 
@@ -39,7 +41,7 @@ export default function CommentSection({ postId }) {
       return;
     }
     try {
-      const res = await fetch("/api/comment/create", {
+      const res = await fetch(`${api}/api/comment/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -70,7 +72,7 @@ export default function CommentSection({ postId }) {
         navigate("/sign-in");
         return;
       }
-      const res = await fetch(`/api/comment/likecomment/${commentId}`, {
+      const res = await fetch(`${api}/api/comment/likecomment/${commentId}`, {
         method: "PUT",
       });
       if (res.ok) {
@@ -103,7 +105,7 @@ export default function CommentSection({ postId }) {
   const handleDelete = async () => {
     try {
       setShowModal(false);
-      const res = await fetch(`/api/comment/deletecomment/${deleteId}`, {
+      const res = await fetch(`${api}/api/comment/deletecomment/${deleteId}`, {
         method: "DELETE",
       });
       if (res.ok) {

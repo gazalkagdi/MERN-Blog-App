@@ -12,10 +12,12 @@ export default function DashComments() {
   const [showModal, setShowModal] = useState(false);
   const [deleteCommentId, setDeleteCommentId] = useState(null);
 
+  const api = import.meta.env.API;
+
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const res = await fetch(`/api/comment/getallcomments`, {
+        const res = await fetch(`${api}/api/comment/getallcomments`, {
           method: "GET",
         });
         const data = await res.json();
@@ -38,7 +40,7 @@ export default function DashComments() {
     try {
       const startIndex = comments.length;
       const res = await fetch(
-        `/api/comment/getallcomments?startIndex=${startIndex}`,
+        `${api}/api/comment/getallcomments?startIndex=${startIndex}`,
         {
           method: "GET",
         }
@@ -58,9 +60,12 @@ export default function DashComments() {
   const handleDeleteComment = async () => {
     setShowModal(false);
     try {
-      const res = await fetch(`/api/comment/deletecomment/${deleteCommentId}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${api}/api/comment/deletecomment/${deleteCommentId}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = await res.json();
       if (!res.ok) {
         console.log(data.message);

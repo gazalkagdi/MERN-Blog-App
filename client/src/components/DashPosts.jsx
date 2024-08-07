@@ -11,11 +11,13 @@ export default function DashPosts() {
   const [showModal, setShowModal] = useState(false);
   const [deletePostId, setDeletePostId] = useState(null);
 
+  const api = import.meta.env.API;
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const res = await fetch(
-          `/api/post/getposts?userId=${currentUser._id}`,
+          `${api}/api/post/getposts?userId=${currentUser._id}`,
           {
             method: "GET",
           }
@@ -40,7 +42,7 @@ export default function DashPosts() {
     try {
       const startIndex = userPosts.length;
       const res = await fetch(
-        `/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`,
+        `${api}/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`,
         {
           method: "GET",
         }
@@ -61,7 +63,7 @@ export default function DashPosts() {
     setShowModal(false);
     try {
       const res = await fetch(
-        `/api/post/deletepost/${deletePostId}/${currentUser._id}`,
+        `${api}/api/post/deletepost/${deletePostId}/${currentUser._id}`,
         {
           method: "DELETE",
         }

@@ -12,11 +12,13 @@ export default function PostPage() {
   const [post, setPost] = useState(null);
   const [recentPost, setRecentPost] = useState(null);
 
+  const api = import.meta.env.API;
+
   useEffect(() => {
     const getPost = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/post/getposts?slug=${postSlug}`, {
+        const res = await fetch(`${api}/api/post/getposts?slug=${postSlug}`, {
           method: "GET",
         });
         const data = await res.json();
@@ -40,7 +42,7 @@ export default function PostPage() {
   useEffect(() => {
     const getPosts = async () => {
       try {
-        const res = await fetch(`/api/post/getposts?limit=3`, {
+        const res = await fetch(`${api}/api/post/getposts?limit=3`, {
           method: "GET",
         });
         const data = await res.json();

@@ -21,10 +21,12 @@ export default function DashOverview() {
   const [lastMonthComments, setLastMonthComments] = useState(0);
   const { currentUser } = useSelector((state) => state.user);
 
+  const api = import.meta.env.API;
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch(`/api/user/getusers?limit=5`, {
+        const res = await fetch(`${api}/api/user/getusers?limit=5`, {
           method: "GET",
         });
         const data = await res.json();
@@ -40,7 +42,7 @@ export default function DashOverview() {
 
     const fetchPosts = async () => {
       try {
-        const res = await fetch(`/api/post/getposts?limit=5`, {
+        const res = await fetch(`${api}/api/post/getposts?limit=5`, {
           method: "GET",
         });
         const data = await res.json();
@@ -56,7 +58,7 @@ export default function DashOverview() {
 
     const fetchComments = async () => {
       try {
-        const res = await fetch(`/api/comment/getallcomments?limit=5`, {
+        const res = await fetch(`${api}/api/comment/getallcomments?limit=5`, {
           method: "GET",
         });
         const data = await res.json();

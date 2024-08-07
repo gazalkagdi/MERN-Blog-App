@@ -18,6 +18,8 @@ export default function DashSidebar() {
   const { currentUser } = useSelector((state) => state.user);
   const [tab, setTab] = useState("");
 
+  const api = import.meta.env.API;
+
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const tabData = urlParams.get("tab");
@@ -28,7 +30,7 @@ export default function DashSidebar() {
 
   const handleSignout = async () => {
     try {
-      const res = await fetch("/api/user/signout", {
+      const res = await fetch(`${api}/api/user/signout`, {
         method: "POST",
       });
 

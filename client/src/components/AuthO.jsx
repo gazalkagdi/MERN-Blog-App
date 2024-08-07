@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 export default function AuthO() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const api = import.meta.env.API;
 
   const handleGoogleClick = async () => {
     const auth = getAuth(app);
@@ -17,7 +18,7 @@ export default function AuthO() {
     provider.setCustomParameters({ prompt: "select_account" });
     try {
       const result = await signInWithPopup(auth, provider);
-      const res = await fetch("api/auth/google", {
+      const res = await fetch(`${api}/api/auth/google`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

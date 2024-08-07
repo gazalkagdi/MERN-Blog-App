@@ -16,6 +16,8 @@ export default function Header() {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
+  const api = import.meta.env.API;
+
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const searchTermFromUrl = urlParams.get("searchTerm");
@@ -26,7 +28,7 @@ export default function Header() {
 
   const handleSignout = async () => {
     try {
-      const res = await fetch("/api/user/signout", {
+      const res = await fetch(`${api}/api/user/signout`, {
         method: "POST",
       });
 

@@ -8,6 +8,8 @@ export default function SignUp() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const api = import.meta.env.API;
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -22,7 +24,7 @@ export default function SignUp() {
     try {
       setLoading(true);
       setErrorMessage(null);
-      const response = await fetch("/api/auth/signup", {
+      const response = await fetch(`${api}/api/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

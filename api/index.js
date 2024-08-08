@@ -27,13 +27,13 @@ const __dirname = path.resolve();
 app.use(express.json());
 app.use(cookieParser());
 
-const corsOptions = {
-  origin: ["https://mern-blog-app-gazal.vercel.app"],
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    credentials: true,
+    origin: ["http://localhost:3000", "https://mern-blog-app-gazal.vercel.app"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);

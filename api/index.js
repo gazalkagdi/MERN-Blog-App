@@ -30,7 +30,7 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:3000", "https://mern-blog-app-gazal.vercel.app"],
+    origin: ["http://localhost:3000", "https://mern-blog-app-eight.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );

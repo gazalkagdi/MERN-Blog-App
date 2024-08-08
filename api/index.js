@@ -7,6 +7,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import path from "path";
+import cors from "cors";
 
 dotenv.config();
 
@@ -25,6 +26,14 @@ const __dirname = path.resolve();
 
 app.use(express.json());
 app.use(cookieParser());
+
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN || "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);

@@ -32,6 +32,8 @@ export default function SignIn() {
     }
   };
 
+  console.log(errorMessage);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
@@ -120,7 +122,7 @@ export default function SignIn() {
           </div>
           {/* {errorMessage && (
             <Alert className="mt-5" color="failure">
-              {errorMessage}
+              {errorMessage.message}
             </Alert>
           )} */}
         </div>

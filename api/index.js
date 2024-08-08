@@ -33,6 +33,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "https://mern-blog-app-eosin-one.vercel.app",
+      "https://mern-blog-app-gazal.vercel.app",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
   })

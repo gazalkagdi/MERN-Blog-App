@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN || "*",
+  origin: ["https://mern-blog-app-gazal.vercel.app"],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };

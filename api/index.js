@@ -35,7 +35,7 @@ app.use(
   })
 );
 
-app.get("/node", (req, res) => res.send("Hello world"));
+app.get("*", (req, res) => res.send("Hello world"));
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);

@@ -19,6 +19,7 @@ export default function DashComments() {
       try {
         const res = await fetch(`${api}/api/comment/getallcomments`, {
           method: "GET",
+          credentials: "include",
         });
         const data = await res.json();
         if (res.ok) {
@@ -43,7 +44,8 @@ export default function DashComments() {
         `${api}/api/comment/getallcomments?startIndex=${startIndex}`,
         {
           method: "GET",
-        }
+          credentials: "include",
+        },
       );
       const data = await res.json();
       if (res.ok) {
@@ -64,14 +66,15 @@ export default function DashComments() {
         `${api}/api/comment/deletecomment/${deleteCommentId}`,
         {
           method: "DELETE",
-        }
+          credentials: "include",
+        },
       );
       const data = await res.json();
       if (!res.ok) {
         console.log(data.message);
       } else {
         setComments((prev) =>
-          prev.filter((comment) => comment._id !== deleteCommentId)
+          prev.filter((comment) => comment._id !== deleteCommentId),
         );
       }
     } catch (error) {

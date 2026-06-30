@@ -4,13 +4,6 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
-import { app } from "../firebase";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -53,29 +46,49 @@ export default function UpdatePost() {
         return;
       }
       setImageUploadError(null);
-      const storage = getStorage(app);
-      const fileName = new Date().getTime() + "-" + file.name;
-      const storageRef = ref(storage, fileName);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      setImageUploadProgress(0);
+
+      const cloudName =
+        import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "your_cloud_name";
+      const uploadPreset =
+        import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "your_upload_preset";
+
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", uploadPreset);
+
+      const xhr = new XMLHttpRequest();
+      xhr.open(
+        "POST",
+        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+        true,
+      );
+
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable) {
+          const progress = (event.loaded / event.total) * 100;
           setImageUploadProgress(progress.toFixed(0));
-        },
-        (error) => {
+        }
+      };
+
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          setImageUploadProgress(null);
+          setImageUploadError(null);
+          setFormData({ ...formData, image: response.secure_url });
+        } else {
           setImageUploadError("Image upload failed");
           setImageUploadProgress(null);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setImageUploadProgress(null);
-            setImageUploadError(null);
-            setFormData({ ...formData, image: downloadURL });
-          });
         }
-      );
+      };
+
+      xhr.onerror = () => {
+        setImageUploadError("Image upload failed");
+        setImageUploadProgress(null);
+      };
+
+      xhr.send(data);
     } catch (error) {
       setImageUploadError("Image upload failed");
       setImageUploadProgress(null);
@@ -94,7 +107,8 @@ export default function UpdatePost() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
-        }
+          credentials: "include",
+        },
       );
       const data = await res.json();
       if (!res.ok) {

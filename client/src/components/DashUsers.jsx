@@ -19,6 +19,7 @@ export default function DashUsers() {
       try {
         const res = await fetch(`${api}/api/user/getusers`, {
           method: "GET",
+          credentials: "include",
         });
         const data = await res.json();
         if (res.ok) {
@@ -43,7 +44,8 @@ export default function DashUsers() {
         `${api}/api/user/getusers?startIndex=${startIndex}`,
         {
           method: "GET",
-        }
+          credentials: "include",
+        },
       );
       const data = await res.json();
       if (res.ok) {
@@ -62,6 +64,7 @@ export default function DashUsers() {
     try {
       const res = await fetch(`${api}/api/user/delete/${deleteUserId}`, {
         method: "DELETE",
+        credentials: "include",
       });
       const data = await res.json();
       if (!res.ok) {

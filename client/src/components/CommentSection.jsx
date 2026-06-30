@@ -51,6 +51,7 @@ export default function CommentSection({ postId }) {
           postId: postId,
           userId: currentUser._id,
         }),
+        credentials: "include",
       });
       const data = await res.json();
       if (res.ok) {
@@ -74,6 +75,7 @@ export default function CommentSection({ postId }) {
       }
       const res = await fetch(`${api}/api/comment/likecomment/${commentId}`, {
         method: "PUT",
+        credentials: "include",
       });
       if (res.ok) {
         const data = await res.json();
@@ -85,8 +87,8 @@ export default function CommentSection({ postId }) {
                   likes: data.likes,
                   numberOfLikes: data.likes.length,
                 }
-              : comment
-          )
+              : comment,
+          ),
         );
       }
     } catch (error) {
@@ -97,8 +99,8 @@ export default function CommentSection({ postId }) {
   const handleEdit = async (comment, editContent) => {
     setComments(
       comments.map((c) =>
-        c._id === comment._id ? { ...c, content: editContent } : c
-      )
+        c._id === comment._id ? { ...c, content: editContent } : c,
+      ),
     );
   };
 
@@ -107,6 +109,7 @@ export default function CommentSection({ postId }) {
       setShowModal(false);
       const res = await fetch(`${api}/api/comment/deletecomment/${deleteId}`, {
         method: "DELETE",
+        credentials: "include",
       });
       if (res.ok) {
         setComments(comments.filter((comment) => comment._id !== deleteId));
@@ -181,7 +184,7 @@ export default function CommentSection({ postId }) {
               onLike={handleLike}
               onEdit={handleEdit}
               OnDelete={() => {
-                setDeleteId(comment._id), setShowModal(true);
+                (setDeleteId(comment._id), setShowModal(true));
               }}
             />
           ))}

@@ -20,7 +20,8 @@ export default function DashPosts() {
           `${api}/api/post/getposts?userId=${currentUser._id}`,
           {
             method: "GET",
-          }
+            credentials: "include",
+          },
         );
         const data = await res.json();
         if (res.ok) {
@@ -45,7 +46,8 @@ export default function DashPosts() {
         `${api}/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`,
         {
           method: "GET",
-        }
+          credentials: "include",
+        },
       );
       const data = await res.json();
       if (res.ok) {
@@ -66,14 +68,15 @@ export default function DashPosts() {
         `${api}/api/post/deletepost/${deletePostId}/${currentUser._id}`,
         {
           method: "DELETE",
-        }
+          credentials: "include",
+        },
       );
       const data = await res.json();
       if (!res.ok) {
         console.log(data.message);
       } else {
         setUserPosts((prev) =>
-          prev.filter((post) => post._id !== deletePostId)
+          prev.filter((post) => post._id !== deletePostId),
         );
       }
     } catch (error) {

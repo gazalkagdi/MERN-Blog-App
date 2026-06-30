@@ -1,13 +1,6 @@
 import { Alert, Button, Modal, TextInput } from "flowbite-react";
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
-import { app } from "../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import {
@@ -55,33 +48,56 @@ export default function DashProfile() {
   const uploadImage = async () => {
     setImageUploading(true);
     setImageError(null);
-    const storage = getStorage(app);
-    const fileName = new Date().getTime() + image.name;
-    const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, image);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    setImageProgress(0);
 
+    const cloudName =
+      import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "your_cloud_name";
+    const uploadPreset =
+      import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "your_upload_preset";
+
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", uploadPreset);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open(
+      "POST",
+      `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+      true,
+    );
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const progress = (event.loaded / event.total) * 100;
         setImageProgress(progress.toFixed(0));
-      },
-      (error) => {
-        setImageError("Could not upload image (File must be less than 2MB)");
+      }
+    };
+
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        setImageUrl(response.secure_url);
+        setFormData({ ...formData, profilePicture: response.secure_url });
+        setImageUploading(false);
+        setImageProgress(null);
+      } else {
+        setImageError("Could not upload image");
         setImageProgress(null);
         setImage(null);
         setImageUrl(null);
         setImageUploading(false);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setImageUrl(downloadURL);
-          setFormData({ ...formData, profilePicture: downloadURL });
-          setImageUploading(false);
-        });
       }
-    );
+    };
+
+    xhr.onerror = () => {
+      setImageError("Could not upload image");
+      setImageProgress(null);
+      setImage(null);
+      setImageUrl(null);
+      setImageUploading(false);
+    };
+
+    xhr.send(data);
   };
 
   const handleChange = (e) => {
@@ -111,6 +127,7 @@ export default function DashProfile() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+        credentials: "include",
       });
       const data = await res.json();
       if (!res.ok) {
@@ -132,6 +149,7 @@ export default function DashProfile() {
       dispatch(deleteUserStart());
       const res = await fetch(`${api}/api/user/delete/${currentUser._id}`, {
         method: "DELETE",
+        credentials: "include",
       });
       const data = await res.json();
       if (!res.ok) {
@@ -149,6 +167,7 @@ export default function DashProfile() {
     try {
       const res = await fetch(`${api}/api/user/signout`, {
         method: "POST",
+        credentials: "include",
       });
 
       const data = await res.json();

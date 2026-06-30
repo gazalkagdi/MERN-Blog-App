@@ -40,8 +40,9 @@ export default function Comment({ comment, onLike, onEdit, OnDelete }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          content: editContent,
+          content: editedContent,
         }),
+        credentials: "include",
       });
 
       if (res.ok) {

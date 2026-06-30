@@ -26,6 +26,7 @@ export default function AuthO() {
           email: result.user.email,
           googlePhotoUrl: result.user.photoURL,
         }),
+        credentials: "include",
       });
       const data = await res.json();
 

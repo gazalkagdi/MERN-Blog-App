@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.3",
+    "baseline-browser-mapping": "^2.10.40",
+    "caniuse-lite": "^1.0.30001800",
     "firebase": "^10.11.0",
     "flowbite-react": "^0.8.0",
     "moment": "^2.30.1",

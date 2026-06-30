@@ -50,10 +50,8 @@ export default function DashProfile() {
     setImageError(null);
     setImageProgress(0);
 
-    const cloudName =
-      import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "your_cloud_name";
-    const uploadPreset =
-      import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "your_upload_preset";
+    const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+    const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
     const data = new FormData();
     data.append("file", image);

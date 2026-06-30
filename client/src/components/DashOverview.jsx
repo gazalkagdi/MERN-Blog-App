@@ -28,6 +28,7 @@ export default function DashOverview() {
       try {
         const res = await fetch(`${api}/api/user/getusers?limit=5`, {
           method: "GET",
+          credentials: "include",
         });
         const data = await res.json();
         if (res.ok) {
@@ -44,6 +45,7 @@ export default function DashOverview() {
       try {
         const res = await fetch(`${api}/api/post/getposts?limit=5`, {
           method: "GET",
+          credentials: "include",
         });
         const data = await res.json();
         if (res.ok) {
@@ -60,6 +62,7 @@ export default function DashOverview() {
       try {
         const res = await fetch(`${api}/api/comment/getallcomments?limit=5`, {
           method: "GET",
+          credentials: "include",
         });
         const data = await res.json();
         if (res.ok) {
